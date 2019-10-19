@@ -39,6 +39,8 @@ US Census Bureau data are stored under: raw_data > english_speaking_immigrants
 
 Relevant data that may or may not be used later is under: raw_data > parkinglot_4data
 
+All data loading is finished at this stage
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -55,18 +57,68 @@ library(data.table)
 library(png)
 library(tidyverse)
 
+#DATA LOADING: Homeland Security Part
+
 #load the immigration by continent data
 #clean up names and values
 
-immigration_continent <- read_xlsx("raw_data/immigration_yearbook/Immigration_ByContinent.xlsx") %>%
+immigration_continent <- read_xlsx("raw_data/immigration_yearbook/Immigration_ByContinent.xlsx", na = c("", "NA")) %>%
   clean_names()
 
+#load the immigration by country data
+#clean up names and values
+# "-" means 0, D means cannot disclose, will do further wrangling once we are in the anlaysis stage
+
+immigration_country_2017 <- read_xlsx("raw_data/immigration_yearbook/2017_table10d.xlsx", na = c("", "NA")) %>%
+  clean_names()
+
+immigration_country_2016 <- read_xlsx("raw_data/immigration_yearbook/2016_table10d.xlsx", na = c("", "NA")) %>%
+  clean_names()
+
+immigration_country_2015 <- read_xlsx("raw_data/immigration_yearbook/2015_table10d.xlsx", na = c("", "NA")) %>%
+  clean_names()
+
+immigration_country_2014 <- read_xlsx("raw_data/immigration_yearbook/2014_table10d.xlsx", na = c("", "NA")) %>%
+  clean_names()
+
+immigration_country_2013 <- read_xlsx("raw_data/immigration_yearbook/2013_table10d.xlsx", na = c("", "NA")) %>%
+  clean_names()
+
+immigration_country_2012 <- read_xlsx("raw_data/immigration_yearbook/2012_table10d.xlsx", na = c("", "NA")) %>%
+  clean_names()
+
+immigration_country_2011 <- read_xlsx("raw_data/immigration_yearbook/2011_table10d.xlsx", na = c("", "NA")) %>%
+  clean_names()
+
+immigration_country_2010 <- read_xlsx("raw_data/immigration_yearbook/2010_table10d.xlsx", na = c("", "NA")) %>%
+  clean_names()
+
+immigration_country_2009 <- read_xlsx("raw_data/immigration_yearbook/2009_table10d.xlsx", na = c("", "NA")) %>%
+  clean_names()
+
+
+#DATA LOADING: US Census Bureau Part
+#load english speaking capability by continent
+
+english_by_contient  <- read_xlsx("raw_data/english_speaking_immigrants/english_by_continent.xlsx", na = c("", "NA")) %>% clean_names()
+
+#load english speaking capability by country, for the top 10 country with most US immigrants
+english_by_country <-
+read_xlsx("raw_data/english_speaking_immigrants/english_by_country.xlsx", na = c("", "NA")) %>% clean_names()
+
+
 ```
+**#Visualization Plan**
 
+1. Will first show an overview of US immigration status (by continent)
 
-data visualization from milestone4 as an illustration
+Example: data visualization from milestone4 as an illustration
 
 <!--render the gif image-->
 ![](graph.gif)
+
+2. Will then show English speaking capability among immigrants, by continent
+
+2. Will show English speaking capaiblity x immigration status for the top 10 countries with the most US immigrants, by country
 
 
